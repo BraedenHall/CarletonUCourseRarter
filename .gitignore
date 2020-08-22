@@ -1,3 +1,6 @@
 database-initializer.js
 package*
 /node_modules/
+webscraper.py
+server.key
+server.cert
