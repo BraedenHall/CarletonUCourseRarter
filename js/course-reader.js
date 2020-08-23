@@ -2,8 +2,8 @@ let fs = require("fs");
 let courses;
 let subjects;
 
-courses = JSON.parse(fs.readFileSync("./courses.json"));
-subjects = JSON.parse(fs.readFileSync("./subjects.json"));
+courses = JSON.parse(fs.readFileSync("../courses.json"));
+subjects = JSON.parse(fs.readFileSync("../subjects.json"));
 
 let data = {};
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			#main-search{
+				width: 540px;
+				height: 300px;
+			}
+			.row{
+				height: 6em;
+			}
+		</style>
+		<title>Course Rater</title>
+		<meta charset="utf-8">
+
+		<%- include("../partials/bootstrap.ejs"); %>
+	</head>
+	<body>
+		<%- include("../partials/header.ejs"); %>
+		<div class="container-fluid">
+			<!-- <input type="text" id="course-search">Put in header -->
+			<br/>
+			<div id="main-search" class="container  align-items-center justify-content-center">
+				<ul class="nav nav-tabs nav-justified">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" href="#specific">Find Specific Course</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#list">View List of Courses</a>
+					</li>
+				</ul>
+				<br/><br/>
+				<div class="tab-content">
+					<div id="specific" class="tab-pane fade show active">
+						<select id="subject" class="form-control selectpicker" data-live-search="true">
+							<option disabled selected> --Select Subject-- </option>
+							<% subjects.forEach(subject => { %>
+								<option data-tokens="<%- subject.name.toLowerCase(); %>"><%- subject.name %></option>
+							<% }) %>
+						</select>
+						<br/><br/>
+						<input class="form-control" type="text" id="course" placeholder="Enter Course Name or Code">
+						<div class="row align-items-end justify-content-around">
+							<button type="button" id="find">See Reviews</button>
+							<button type="button" id="rate">Rate Course</button>
+						</div>
+					</div>
+					<div id="list" class="tab-pane fade">
+						<p>Proof</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- <script src="../../client.js"></script> -->
+</html>
