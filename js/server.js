@@ -15,8 +15,8 @@ app.set("views", "./views");
 
 app.use(express.static("./public"));
 
-// let courseRouter = require("./course-router");
-// app.use("/courses", courseRouter);
+let courseRouter = require("./course-router");
+app.use("/courses", courseRouter);
 
 app.get("/", loadSubjects, sendIndex);
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Course Rater</title>
+		<meta charset="utf-8">
+
+		<%- include("../partials/bootstrap.ejs"); %>
+	</head>
+	<body>
+		<%- include("../partials/header.ejs"); %>
+		<% courses.forEach(course => { %>
+			<a href="<%=course.code.slice(0,-5).toLowerCase();%>/<%=course.code.slice(-4);%>"><%= course.name; %> (<%= course.code %>)</a><br/>
+		<% }); %>
+	</body>
+</html>
