@@ -25,7 +25,7 @@ function sendIndex(req,res,next){
 }
 
 function loadSubjects(req,res,next){
-	mongoose.connection.db.listCollections({},{nameOnly: true}).toArray(function(err,result){
+	mongoose.connection.db.collection("subjects").find().toArray(function(err,result){
 		if(err){
 			console.log(err);
 			return;

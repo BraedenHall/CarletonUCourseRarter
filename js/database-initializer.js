@@ -2,7 +2,10 @@ let mongo = require("mongodb");
 let  MongoClient = mongo.MongoClient;
 let db;
 
-let courses = require("./course-reader");
+let data = require("./course-reader");
+
+let courses = data.courses;
+let subjects = data.subjects;
 
 let closeCount = Object.keys(data).length;
 
@@ -29,6 +32,7 @@ MongoClient.connect("mongodb://localhost:27017/", function(err, client) {
 						console.log(subject);
 						closeCount-=1;
 					});
+					db.collection("subjects").insertOne({name: subject, code: subjects[subject]});
 				},2000);
 			});
 			return;
@@ -57,6 +61,7 @@ MongoClient.connect("mongodb://localhost:27017/", function(err, client) {
 									console.log(subject);
 									closeCount-=1;
 								});
+								db.collection("subjects").insertOne({name: subject, code: subjects[subject]});
 							},2000);
 						});
 					}

@@ -8,8 +8,7 @@ subjects = JSON.parse(fs.readFileSync("../subjects.json"));
 let data = {};
 
 Object.keys(subjects).forEach(subject => {
-	let sub = subject+" ("+subjects[subject]+")"
-	data[sub] = [];
+	data[subject] = [];
 	for(course in courses){
 		if(course.includes(subjects[subject])){
 			let c = {};
@@ -17,11 +16,11 @@ Object.keys(subjects).forEach(subject => {
 			c.code = course;
 			c.ratings = [];
 			c.avg = 0;
-			data[sub].push(c);
+			data[subject].push(c);
 		}
 	}
 });
 
 // console.log(Object.keys(data));
 
-module.exports = data;
+module.exports = {courses: data, subjects};
