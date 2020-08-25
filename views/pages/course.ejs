@@ -9,6 +9,26 @@
 			<h2><%= course.name %></h2>
 			<h3><%= course.code %></h3>
 
-			<h3><%= course.avg %></h3>
+			<h3> Avg Rating: <%= reviews.reduce(function(a,b){ return a.rating + b.rating; })/reviews.length %></h3>
+			<h3> Avg Difficulty: <%= reviews.reduce(function(a,b){ return a.difficulty + b.difficulty; })/reviews.length %></h3>
+			<br/>
+			<button type="button" id="rate" onclick="window.location.href = '/reviews/<%= course.code.replace(` `, ``).toLowerCase(); %>'">Rate Course</button>
+			<br/><br/>
+			<% reviews.forEach(review => { %>
+				<div>
+					<% if(review.grade){ %>
+						<p><%= review.grade %></p>
+					<% } %>
+					<p>Prof: <%= review.prof %></p>
+					<p>Rating: <%= review.rating %> Difficulty: <%= review.difficulty %></p>
+					<p><%= review.review %></p>
+					<% if(review.tags){ %>
+						<% review.tags.forEach(tag => { %>
+							<span><%= tag %></span>
+						<% }); %>
+					<% } %>
+				</div>
+				<br/>
+			<% }); %>
 		</body>
 </html>

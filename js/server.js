@@ -17,6 +17,8 @@ app.use(express.static("./public"));
 
 let courseRouter = require("./course-router");
 app.use("/courses", courseRouter);
+let reviewRouter = require("./review-router");
+app.use("/reviews", reviewRouter);
 
 app.get("/", loadSubjects, sendIndex);
 

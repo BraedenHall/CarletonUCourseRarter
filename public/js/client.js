@@ -42,3 +42,34 @@ function viewCourse(){
 		window.location.href = url+course.slice(course.indexOf("(")+1,-6).toLowerCase()+"/"+course.slice(-5,-1);
 	}
 }
+
+function rateCourse(){
+	let course = document.getElementById("courses").value;
+	let url = "https://localhost:3000/reviews/";
+
+	if(!course.includes("--")){
+		window.location.href = url+course.slice(course.indexOf("(")+1,-6).toLowerCase()+course.slice(-5,-1);
+	}
+}
+
+function submitReview(couseCode){
+	let review = {};
+
+	review.prof = document.getElementById("prof").value;
+	review.rating = Number(document.getElementById("rating").value);
+	review.difficulty = Number(document.getElementById("difficulty").value);
+	review.review = document.getElementById("review").value;
+	if(!document.getElementById("grade").value.includes("--")){
+		review.grade = document.getElementById("grade").value;
+	}
+
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if(this.readyState == 4 && this.status == 200){
+			window.location.href = "https://localhost:3000/courses/"+couseCode.slice(0,-5).toLowerCase()+"/"+couseCode.slice(-4);
+		}
+	}
+	xhttp.open("POST",document.URL,true);
+	xhttp.setRequestHeader("Content-Type", "application/json");
+	xhttp.send(JSON.stringify(review));
+}

@@ -1,17 +1,37 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const Course = require("./courseModel");
+const Review = require("./reviewModel");
+const Subject = require("./subjectModel")
+
 
 let router = express.Router();
 
 router.get("/:sid", loadCourses, sendCourses);
 
-router.get("/:sid/:cid", getCourse, sendCourse);
+router.get("/:sid/:cid", getCourse, findReviews, sendCourse);
+
+function findReviews(req,res,next){
+	let c = {};
+	c.id = res.course._id;
+	c.code = res.course.code;
+
+	Review.find().where({course: c}).exec(function(err,result){
+		if(err){
+			console.log(err);
+			return;
+		}
+
+		console.log(result);
+		res.reviews = result;
+		next();
+	});
+}
 
 function getCourse(req,res,next){
 	let courseCode = req.params.sid + " " + req.params.cid;
 
-	mongoose.connection.db.collection("subjects").findOne({code: new RegExp(req.params.sid, "i")}, function(err, result){
+	Subject.findOne({code: new RegExp(req.params.sid, "i")}, function(err, result){
 		if(err){
 			console.log(err);
 			return;
@@ -33,14 +53,14 @@ function getCourse(req,res,next){
 
 function sendCourse(req,res,next){
 	res.format({
-		"text/html": () => { res.render("pages/course", {course: res.course}) }
+		"text/html": () => { res.render("pages/course", {course: res.course, reviews: res.reviews}) }
 	});
 }
 
 function loadCourses(req,res,next){
 	let year = Number(req.query.year) ? req.query.year : "";
 
-	mongoose.connection.db.collection("subjects").findOne({code: new RegExp(req.params.sid,"i")}, function(err,result){
+	Subject.findOne({code: new RegExp(req.params.sid,"i")}, function(err,result){
 		if(err){
 			console.log(err);
 			res.status(500).send("Something happend on our side.");
