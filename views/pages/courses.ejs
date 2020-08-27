@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<style>
+			.course {
+				background-color:rgb(248, 248, 248);
+				color: black;
+				margin-bottom: 5px;
+				padding-bottom: 5px;
+				padding-left: 3px;
+				text-decoration: none;
+			}
+			.course:hover {
+				background-color:rgb(228, 228, 228);
+				color:deepskyblue;
+			}
+			.sub {
+				color:gray
+			}
+		</style>
 		<%- include("../partials/bootstrap.ejs"); %>
 	</head>
 	<body>
 		<%- include("../partials/header.ejs"); %>
-		<% courses.forEach(course => { %>
-			<a href="<%=course.code.slice(0,-5).toLowerCase();%>/<%=course.code.slice(-4);%>"><%= course.name; %> (<%= course.code %>)</a><br/>
-		<% }); %>
+		<div class="container">
+			<% if(courses.length > 0){ %>
+				<% courses.forEach(course => { %>
+					<a href="/courses/<%=course.code.slice(0,-5).toLowerCase();%>/<%=course.code.slice(-4);%>">
+						<div class="course">
+							<h5 class="main"><%= course.name; %></h5>
+							<!-- <hr style="padding: 0px; margin: 0px;" class="my-4"> -->
+							<h6 class="sub"><%= course.code %></h6>
+						</div>
+					</a>
+				<% }); %>
+			<% } else{ %>
+				<p>Your search returned no results.</p>
+			<% } %>
+			<br/>
+			<nav aria-label="Search results page">
+				<ul class="pagination">
+					<% if(page > 1){ %>
+						<% let url = "?page=" + (page-1) + "&" + qstring; %>
+						<li class="page-item">
+							<a class="page-link" href="<%= url %>" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+					<% } %>
+					<% for(let i = 0; i < numPages; i++){ %>
+						<% let url = "?page=" + (i+1) + "&" + qstring; %>
+						<% if(page == i+1){ %>
+							<li class="page-item active"><a class="page-link" href="<%=url%>"><%- i+1 %></a></li>
+						<% } else{ %>
+							<li class="page-item"><a class="page-link" href="<%=url%>"><%- i+1 %></a></li>
+						<% } %>
+					<% } %>
+					<% if(page < numPages){ %>
+						<% let url = "?page=" + (page+1) + "&" + qstring; %>
+						<li class="page-item">
+							<a class="page-link" href="<%=url%>" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					<% } %>
+				</ul>
+			</nav>
+		</div>
 	</body>
 </html>

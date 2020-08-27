@@ -15,7 +15,7 @@ Object.keys(subjects).forEach(subject => {
 			c.name = courses[course];
 			c.code = course;
 			c.ratings = [];
-			c.avg = 0;
+			c.ratingLength = 0;
 			data[subject].push(c);
 		}
 	}

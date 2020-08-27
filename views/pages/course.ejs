@@ -8,9 +8,14 @@
 
 			<h2><%= course.name %></h2>
 			<h3><%= course.code %></h3>
-
-			<h3> Avg Rating: <%= reviews.reduce(function(a,b){ return a.rating + b.rating; })/reviews.length %></h3>
-			<h3> Avg Difficulty: <%= reviews.reduce(function(a,b){ return a.difficulty + b.difficulty; })/reviews.length %></h3>
+ 
+			<% if(reviews.length > 0){ %>
+				<h3> Avg Rating: <%= reviews.reduce(function(r,b){ return r + b.rating; }, 0)/reviews.length %></h3>
+				<h3> Avg Difficulty: <%= reviews.reduce(function(r,b){ return r + b.difficulty; }, 0)/reviews.length %></h3>
+			<% } else{ %>
+				<h3> Avg Rating: 0</h3>
+				<h3> Avg Difficulty: 0</h3>
+			<% } %>
 			<br/>
 			<button type="button" id="rate" onclick="window.location.href = '/reviews/<%= course.code.replace(` `, ``).toLowerCase(); %>'">Rate Course</button>
 			<br/><br/>

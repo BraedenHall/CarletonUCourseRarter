@@ -21,7 +21,14 @@ function createReview(req,res,next){
 			return;
 		}
 
-		next();
+		mongoose.connection.db.collection(res.subject.name).updateOne({_id: res.course._id}, {$push: {ratings: result._id}, $inc: {ratingLength: 1}}, function(err2,course){
+			if(err2){
+				console.log(er2);
+				return;
+			}
+
+			next();
+		});
 	});
 }
 
@@ -42,6 +49,7 @@ function getCourse(req,res,next){
 			return;
 		}
 
+		res.subject = result;
 		subject = result.name;
 		mongoose.connection.db.collection(subject).findOne({code: new RegExp(courseCode,"i")}, function(err2,course){
 			if(err2){
